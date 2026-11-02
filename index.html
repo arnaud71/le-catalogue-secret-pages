@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#811e35">
+  <meta name="description" content="Quatre couleurs, dix essais. Croisez les indices et retrouvez le code dans une ambiance de bibliothèque.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none'">
+  <title>Le Catalogue secret — Jeu de déduction</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Aller au jeu</a>
+  <header class="site-header">
+    <div class="brand-mark">
+      <svg class="brand-icon" viewBox="0 0 92 90" fill="none" aria-hidden="true">
+        <path fill="#811e35" d="M3 8h11v73H3zM28 18h15v63H28zM71 27h14v54H71z"/>
+        <path fill="#c3a071" d="M18 20h7v61h-7zM48 31h13v50H48zM64 14h5v67h-5z"/>
+        <path stroke="#faf5e9" stroke-width="1.5" d="M6 17h5M6 20h5M31 27h9M31 30h9M74 36h8M51 40h7M51 44h7"/>
+        <path stroke="#baa78d" d="M0 84h90"/>
+      </svg>
+      <div class="brand-copy">
+        <p class="eyebrow">LE PLAISIR DE CROISER LES INDICES</p>
+        <h1>Le Catalogue secret</h1>
+        <p class="tagline">4 couleurs à découvrir <span aria-hidden="true">·</span> 10 essais</p>
+      </div>
+    </div>
+    <nav class="header-actions" aria-label="Commandes du jeu">
+      <a id="rules-link" class="button button-secondary" href="#rules"><span aria-hidden="true">☷</span> Règles</a>
+      <button id="new-game" class="button button-primary" type="button"><span aria-hidden="true">↻</span> Nouvelle partie</button>
+    </nav>
+  </header>
+
+  <main id="main-content" class="layout" tabindex="-1">
+    <noscript><p class="feedback is-error">Activez JavaScript pour jouer au Catalogue secret. Le jeu fonctionne entièrement dans votre navigateur.</p></noscript>
+    <section class="game-card" aria-label="Plateau de jeu">
+      <section class="secret-section" aria-labelledby="secret-title">
+        <div class="section-heading">
+          <h2 id="secret-title">Code secret</h2>
+          <span id="game-status" class="status-pill" role="status" aria-live="polite">Prêt à jouer</span>
+        </div>
+        <div id="secret-code" class="peg-row secret-row" role="img" aria-label="Les quatre couleurs du code restent cachées">
+          <span class="secret-peg" aria-hidden="true">?</span><span class="secret-peg" aria-hidden="true">?</span><span class="secret-peg" aria-hidden="true">?</span><span class="secret-peg" aria-hidden="true">?</span>
+        </div>
+        <div class="progress-line"><span id="attempt-count">0 essai sur 10</span><span id="remaining-count">10 essais restants</span></div>
+      </section>
+
+      <section class="history-section" aria-labelledby="history-title">
+        <div class="section-heading"><h2 id="history-title">Historique des essais</h2><span class="eyebrow" aria-hidden="true">VOTRE REGISTRE</span></div>
+        <div id="history-empty" class="empty-state">
+          <span class="empty-icon" aria-hidden="true">01</span>
+          <p>Le premier indice vous attend.</p>
+          <p>Composez quatre couleurs et commencez votre recherche.</p>
+        </div>
+        <div id="history-table-wrapper" class="table-wrapper" hidden>
+          <table class="history-table">
+            <caption class="sr-only">Propositions validées et indices globaux. Les indices ne désignent aucune position.</caption>
+            <thead><tr><th scope="col">Essai</th><th scope="col">Proposition</th><th scope="col">Bien<br>placées</th><th scope="col">Mal<br>placées</th></tr></thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="composer" class="composer" aria-labelledby="proposal-title">
+        <div class="section-heading"><h2 id="proposal-title">Votre proposition <span aria-hidden="true">·</span> <span id="proposal-number">Essai 1</span></h2></div>
+        <form id="guess-form" novalidate>
+          <fieldset class="guess-fieldset">
+            <legend class="sr-only">Quatre couleurs ordonnées de gauche à droite</legend>
+            <div id="guess-slots" class="peg-row guess-row"></div>
+          </fieldset>
+          <div class="palette-heading"><h3>Choisir une couleur</h3><p id="selection-hint" class="position-hint">Pour la position 1</p></div>
+          <div id="color-palette" class="palette" role="group" aria-label="Palette des six couleurs"></div>
+          <div class="form-actions">
+            <button id="submit-guess" class="button button-primary button-submit" type="submit">Valider <span aria-hidden="true">→</span></button>
+            <button id="clear-guess" class="button button-text" type="button">Effacer la proposition</button>
+          </div>
+        </form>
+        <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true">Choisissez une couleur pour chacune des quatre positions.</p>
+      </section>
+
+      <section id="game-result" class="game-result" aria-labelledby="result-title" hidden>
+        <p class="eyebrow" id="result-eyebrow"></p><h2 id="result-title"></h2><p id="result-message"></p>
+        <button id="play-again" class="button button-primary" type="button">Jouer une nouvelle partie <span aria-hidden="true">↻</span></button>
+      </section>
+      <footer class="game-card-footer"><span>Les couleurs peuvent se répéter.</span><span>Les deux indices sont globaux.</span></footer>
+    </section>
+
+    <aside class="sidebar" aria-label="Règles et aide">
+      <section id="rules" class="rules-card" aria-labelledby="rules-title" tabindex="-1">
+        <div class="section-heading"><span class="book-symbol" aria-hidden="true">☷</span><h2 id="rules-title">Règles du jeu</h2></div>
+        <ol class="rules-list">
+          <li>Retrouvez <strong>4 couleurs dans le bon ordre</strong>, parmi les six proposées.</li>
+          <li>Une couleur peut apparaître <strong>plusieurs fois</strong>.</li>
+          <li>Vous disposez de <strong>10 essais</strong>. Une proposition incomplète ne consomme aucun essai.</li>
+          <li><strong>Bien placées</strong> : bonnes couleurs aux bonnes positions.</li>
+          <li><strong>Mal placées</strong> : couleurs présentes ailleurs. Chaque occurrence compte au maximum une fois, les bien placées d’abord.</li>
+          <li>Les indices ne désignent <strong>aucune position</strong>. Quatre bien placées donnent la victoire, même au dixième essai.</li>
+        </ol>
+        <p class="rules-note">Après dix essais sans trouver le code, la partie est terminée. « Nouvelle partie » remet tout à zéro et tire un nouveau code.</p>
+        <div class="hint-keyboard"><span aria-hidden="true">⌨</span><p><kbd>Tab</kbd> pour naviguer, <kbd>Entrée</kbd> pour choisir ou valider. Sur une position : <kbd>←</kbd> <kbd>→</kbd> pour se déplacer, <kbd>1</kbd> à <kbd>6</kbd> pour choisir, <kbd>Suppr</kbd> pour effacer.</p></div>
+      </section>
+      <section class="catalogue-card" aria-labelledby="catalogue-title">
+        <p class="eyebrow">FICHE / 001</p>
+        <h2 id="catalogue-title">À chaque essai,<br>une nouvelle piste.</h2>
+        <div class="catalogue-illustration" aria-hidden="true"><div class="index-cards"><span></span><span></span><span></span><span></span><span></span></div><div class="catalogue-drawer"><span></span></div></div>
+        <p>Comparez vos propositions, croisez les indices et affinez votre recherche.</p>
+        <div class="catalogue-keywords"><span>OBSERVER</span><span>COMPARER</span><span>DÉDUIRE</span></div>
+      </section>
+    </aside>
+  </main>
+  <footer class="site-footer"><p>Le Catalogue secret <span aria-hidden="true">·</span> <span id="app-version">v1.0.0</span></p><a href="https://docs.google.com/document/d/17RUqUnEvIilitiNSY1kbK0QT7vBVcUeAT3L6ONJN8XU/edit" target="_blank" rel="noopener noreferrer">Règles de référence <span aria-hidden="true">↗</span></a></footer>
+</body>
+</html>
