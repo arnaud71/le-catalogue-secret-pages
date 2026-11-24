@@ -143,7 +143,7 @@ h1, h2, h3 { font-weight: 600; }
 
 main { max-width: 1240px; margin: 0 auto; padding: 28px 28px 0; }
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 282px; align-items: start; gap: 22px; }
-.game-card, .rules-card, .catalogue-card {
+.game-card, .rules-card, .catalogue-card, .install-card {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #fffdf75e;
@@ -341,6 +341,29 @@ kbd { font-family: inherit; }
 .game-card-footer kbd, .hint-keyboard kbd { padding: 1px 4px; border: 1px solid #d3c6b0; border-radius: 3px; color: #5f5141; background: #fffcf5; font-size: .63rem; white-space: nowrap; }
 
 .sidebar { display: grid; gap: 20px; }
+.install-card { padding: 22px; }
+.install-card img, .install-help > img { display: block; margin-bottom: 14px; border-radius: 12px; }
+.install-card h2 { margin-bottom: 9px; font-size: 1.25rem; line-height: 1.25; }
+.install-card p { color: var(--muted); font-size: .78rem; }
+.install-card .button { width: 100%; margin-top: 17px; }
+.install-help {
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 26px;
+  overflow-y: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--paper-bright);
+  box-shadow: var(--shadow);
+}
+.install-help::backdrop { background: #28231f80; }
+.install-help h2 { margin-bottom: 12px; font-size: 1.55rem; line-height: 1.2; }
+.install-help p, .install-help li { font-size: .85rem; }
+.install-help ul { margin: 18px 0; padding-left: 20px; }
+.install-help li + li { margin-top: 12px; }
+.install-help .install-note { color: var(--muted); font-size: .75rem; }
+.install-help form { margin-top: 20px; text-align: right; }
 .rules-card { padding: 23px 22px 0; }
 .rules-card .section-heading { justify-content: flex-start; gap: 10px; }
 .rules-card .section-heading svg { width: 24px; height: 24px; color: var(--gold); flex-shrink: 0; }

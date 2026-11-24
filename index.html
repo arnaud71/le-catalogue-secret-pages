@@ -4,13 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#811e35">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Catalogue">
   <meta name="description" content="Quatre couleurs, dix essais. Croisez les indices et retrouvez le code dans une ambiance de bibliothèque.">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none'">
   <title>Le Catalogue secret — Jeu de déduction</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./src/app.js"></script>
+  <script type="module" src="./src/install.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Aller au jeu</a>
@@ -102,6 +107,12 @@
         <p class="rules-note">Après dix essais sans trouver le code, la partie est terminée. « Nouvelle partie » remet tout à zéro et tire un nouveau code.</p>
         <div class="hint-keyboard"><span aria-hidden="true">⌨</span><p><kbd>Tab</kbd> pour naviguer, <kbd>Entrée</kbd> pour choisir ou valider. Sur une position : <kbd>←</kbd> <kbd>→</kbd> pour se déplacer, <kbd>1</kbd> à <kbd>6</kbd> pour choisir, <kbd>Suppr</kbd> pour effacer.</p></div>
       </section>
+      <section id="install-card" class="install-card" aria-labelledby="install-title" hidden>
+        <img src="./assets/icon.svg" width="52" height="52" alt="">
+        <h2 id="install-title">Le jeu à portée de main</h2>
+        <p>Retrouvez le Catalogue depuis l’écran d’accueil, avec son icône.</p>
+        <button id="install-game" class="button button-secondary" type="button">Installer le jeu</button>
+      </section>
       <section class="catalogue-card" aria-labelledby="catalogue-title">
         <p class="eyebrow">FICHE / 001</p>
         <h2 id="catalogue-title">À chaque essai,<br>une nouvelle piste.</h2>
@@ -111,6 +122,18 @@
       </section>
     </aside>
   </main>
-  <footer class="site-footer"><p>Le Catalogue secret <span aria-hidden="true">·</span> <span id="app-version">v1.0.0</span></p><a href="https://docs.google.com/document/d/17RUqUnEvIilitiNSY1kbK0QT7vBVcUeAT3L6ONJN8XU/edit" target="_blank" rel="noopener noreferrer">Règles de référence <span aria-hidden="true">↗</span></a></footer>
+  <footer class="site-footer"><p>Le Catalogue secret <span aria-hidden="true">·</span> <span id="app-version">v1.1.0</span></p><a href="https://docs.google.com/document/d/17RUqUnEvIilitiNSY1kbK0QT7vBVcUeAT3L6ONJN8XU/edit" target="_blank" rel="noopener noreferrer">Règles de référence <span aria-hidden="true">↗</span></a></footer>
+  <dialog id="install-help" class="install-help" aria-labelledby="install-help-title">
+    <img src="./assets/icon.svg" width="60" height="60" alt="">
+    <h2 id="install-help-title">Installer le Catalogue</h2>
+    <p>Ouvrez le jeu dans votre navigateur habituel, puis ajoutez-le à votre écran d’accueil.</p>
+    <ul>
+      <li><strong>iPhone / iPad, dans Safari :</strong> menu Partager, puis « Sur l’écran d’accueil ». Activez « Ouvrir comme app web » si cette option apparaît, puis Ajouter.</li>
+      <li><strong>Android, dans Chrome :</strong> menu ⋮, puis « Ajouter à l’écran d’accueil » ou « Installer l’application ».</li>
+      <li><strong>Ordinateur :</strong> utilisez l’icône d’installation dans la barre d’adresse, si elle est proposée.</li>
+    </ul>
+    <p class="install-note">Une connexion est nécessaire pour ouvrir le jeu. La partie n’est pas conservée après fermeture ou rechargement.</p>
+    <form method="dialog"><button class="button button-primary" autofocus>Compris</button></form>
+  </dialog>
 </body>
 </html>
